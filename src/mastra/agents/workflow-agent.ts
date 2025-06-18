@@ -3,6 +3,21 @@ import { Agent } from '@mastra/core/agent';
 import { Memory } from '@mastra/memory';
 import { LibSQLStore } from '@mastra/libsql';
 import { postprocessWorkflowTool } from '../tools/postprocess-workflow-tool';
+import { availableWorkers } from '../config/workers';
+
+const generateWorkerInstructions = () => {
+  const workerDescriptions = availableWorkers
+    .map(worker => `- ${worker.id}: ${worker.description}`)
+    .join('\n    ');
+
+  return `
+    **Available Workers:**
+    ${workerDescriptions}
+
+    When creating workflows, you must use these exact worker IDs for the corresponding operations.
+    Each node in the workflow should use one of these worker IDs.
+  `;
+};
 
 export const workflowAgent = new Agent({
   name: 'Workflow Builder Agent',
@@ -28,6 +43,8 @@ export const workflowAgent = new Agent({
     - Utilize memory to recall previous workflow states and edits for the user.  
     - If a user requests a description, provide a brief summary before the JSON, but ensure the JSON object is the primary response.  
 
+    ${generateWorkerInstructions()}
+
     **Behavioral Guidelines:**  
     - Maintain a clear and concise communication style.  
     - Prioritize accuracy and adherence to the specified JSON structure.  
@@ -37,6 +54,7 @@ export const workflowAgent = new Agent({
     **Constraints:**  
     - Do not include any explanations or comments outside the JSON object unless explicitly requested.  
     - Ensure all generated JSON is valid and adheres to the React Flow specifications.  
+    - Only use the provided worker IDs as node identifiers in the workflow, or just random numbers if the node is not a worker.  
 
     **Success Criteria:**  
     - The JSON output must be valid and compatible with React Flow.  

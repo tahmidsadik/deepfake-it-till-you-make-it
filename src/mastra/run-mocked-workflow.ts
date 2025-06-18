@@ -1,13 +1,14 @@
-import { Workflow, WorkflowEngine, createAccountWorker, createPolicyWorker, fetchAccountWorker, fetchPolicyWorker } from "../workflow-engine";
+import { WorkflowEngine } from "../workflow-engine";
+import { availableWorkers } from "./config/workers";
 
 export async function runMockedWorkflow(input: any = {}) {
   const { workflow, initialInput } = input;
   
   const engine = new WorkflowEngine(workflow, []);
-  engine.registerWorker('create-policy', createPolicyWorker);
-  engine.registerWorker('fetch-account', fetchAccountWorker);
-  engine.registerWorker('create-account', createAccountWorker);
-  engine.registerWorker('fetch-policy', fetchPolicyWorker);
+  
+  availableWorkers.forEach(worker => {
+    engine.registerWorker(worker.id, worker.implementation);
+  });
 
   try {
     const results = await engine.execute(initialInput);

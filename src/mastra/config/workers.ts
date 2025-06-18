@@ -1,10 +1,4 @@
-import { createAccountWorker, fetchAccountWorker } from "./account-workers";
-import { createPolicyWorker, fetchPolicyWorker } from "./policy-workers";
-
-export interface Worker {
-  id: string;
-  execute: (input: any) => Promise<any>;
-}
+import { Worker, createAccountWorker, createPolicyWorker, fetchAccountWorker, fetchPolicyWorker } from '../../workflow-engine';
 
 export interface WorkerConfig {
   id: string;
