@@ -1,5 +1,4 @@
-import { WorkflowEngine } from "../workflow-engine";
-import { availableWorkers } from "./config/workers";
+import { availableWorkers, WorkflowEngine } from "../workflow-engine";
 
 export async function runMockedWorkflow(input: any = {}) {
   const { workflow, initialInput } = input;

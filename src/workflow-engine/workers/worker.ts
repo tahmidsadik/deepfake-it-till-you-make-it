@@ -1,4 +1,5 @@
 import { createAccountWorker, fetchAccountWorker } from "./account-workers";
+import { sendEmailWorker } from "./notification-workers";
 import { createPolicyWorker, fetchPolicyWorker } from "./policy-workers";
 
 export interface Worker {
@@ -42,5 +43,12 @@ export const availableWorkers: WorkerConfig[] = [
     type: 'create',
     resource: 'policy',
     implementation: createPolicyWorker
+  },
+  {
+    id: 'send-email',
+    description: 'Sends an email',
+    type: 'create',
+    resource: 'email',
+    implementation: sendEmailWorker
   }
 ]; 

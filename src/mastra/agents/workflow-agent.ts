@@ -3,7 +3,7 @@ import { Agent } from '@mastra/core/agent';
 import { Memory } from '@mastra/memory';
 import { LibSQLStore } from '@mastra/libsql';
 import { postprocessWorkflowTool } from '../tools/postprocess-workflow-tool';
-import { availableWorkers } from '../config/workers';
+import { availableWorkers } from '../../workflow-engine';
 
 const generateWorkerInstructions = () => {
   const workerDescriptions = availableWorkers
