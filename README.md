@@ -23,3 +23,7 @@ npm run start
 ```
 
 The application will be available at http://localhost:4111
+
+## Documentation
+
+For more information about Mastra, visit the official documentation: https://mastra.ai/docs
